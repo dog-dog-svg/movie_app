@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+/*
+function Fruit(props) {
+  console.log(props);
+	return <h3>{props.fav}맛있다</h3>;
+}
+*/
+
+function Fruit({fav}){
+  return <h1>{fav}맛있다</h1>
 }
 
+function App() {
+	return (
+		<div>
+			<h1>안녕하세요</h1>
+			<Fruit fav="바나나"></Fruit>
+			<Fruit fav="딸기"></Fruit>
+			<Fruit fav="복숭아"></Fruit>
+			<Fruit fav="파인애플"></Fruit>
+		</div>
+	);
+}
 export default App;
