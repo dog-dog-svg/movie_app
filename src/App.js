@@ -1,25 +1,56 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-/*
-function Fruit(props) {
-  console.log(props);
-	return <h3>{props.fav}맛있다</h3>;
+function Fruit({ name, picture, rating }) {
+	return (
+		<div>
+			<h1>{name}맛있다</h1>
+			<div>별점:{rating}</div>
+			<img src={picture} alt={name} />
+		</div>
+	);
 }
-*/
 
-function Fruit({fav}){
-  return <h1>{fav}맛있다</h1>
-}
+const fruitILike = [
+	{
+		id: 1,
+		name: "banana",
+		image: "http://qwerew.cafe24.com/images/banana.png",
+		rating: 5,
+	},
+	{
+		id: 2,
+		name: "orange",
+		image: "http://qwerew.cafe24.com/images/orange.png",
+		rating: 4.5,
+	},
+	{
+		id: 3,
+		name: "apple",
+		image: "http://qwerew.cafe24.com/images/apple.png",
+		rating: 1.9,
+	},
+	{
+		id: 4,
+		name: "melon",
+		image: "http://qwerew.cafe24.com/images/melon.jpg",
+		rating: 3.8,
+	},
+];
 
 function App() {
 	return (
 		<div>
-			<h1>안녕하세요</h1>
-			<Fruit fav="바나나"></Fruit>
-			<Fruit fav="딸기"></Fruit>
-			<Fruit fav="복숭아"></Fruit>
-			<Fruit fav="파인애플"></Fruit>
+			{fruitILike.map((dish) => (
+				<Fruit key={dish.id} name={dish.name} picture={dish.image} rating={dish.rating} />
+			))}
 		</div>
 	);
 }
+
+Fruit.propTypes = {
+	name: PropTypes.string.isRequired,
+	picture: PropTypes.string.isRequired,
+	rating: PropTypes.number.isRequired,
+};
 export default App;
