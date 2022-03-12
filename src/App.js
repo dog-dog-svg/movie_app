@@ -1,56 +1,42 @@
 import React from "react";
-import PropTypes from "prop-types";
 
-function Fruit({ name, picture, rating }) {
-	return (
-		<div>
-			<h1>{name}맛있다</h1>
-			<div>별점:{rating}</div>
-			<img src={picture} alt={name} />
-		</div>
-	);
+class App extends React.Component {
+	state = {
+		count: 0,
+	};
+	add = () => {
+		this.setState((current) => ({
+			count: this.state.count + 1,
+		}));
+	};
+
+	minus = () => {
+		this.setState((current) => ({
+			count: this.state.count - 1,
+		}));
+	};
+
+	componentDidMount() {
+		console.log("component rendered");
+	}
+  componentDidUpdate() {
+    console.log('I just updated');
+}
+	render() {
+		console.log("I'm render");
+		return (
+			<div>
+				<h1> 숫자는 : {this.state.count} </h1>
+				<button onClick={this.add}>Add</button>
+				<button onClick={this.minus}>Minus</button>
+			</div>
+		);
+	}
+
+	constructor(props) {
+		super(props);
+		console.log("hello");
+	}
 }
 
-const fruitILike = [
-	{
-		id: 1,
-		name: "banana",
-		image: "http://qwerew.cafe24.com/images/banana.png",
-		rating: 5,
-	},
-	{
-		id: 2,
-		name: "orange",
-		image: "http://qwerew.cafe24.com/images/orange.png",
-		rating: 4.5,
-	},
-	{
-		id: 3,
-		name: "apple",
-		image: "http://qwerew.cafe24.com/images/apple.png",
-		rating: 1.9,
-	},
-	{
-		id: 4,
-		name: "melon",
-		image: "http://qwerew.cafe24.com/images/melon.jpg",
-		rating: 3.8,
-	},
-];
-
-function App() {
-	return (
-		<div>
-			{fruitILike.map((dish) => (
-				<Fruit key={dish.id} name={dish.name} picture={dish.image} rating={dish.rating} />
-			))}
-		</div>
-	);
-}
-
-Fruit.propTypes = {
-	name: PropTypes.string.isRequired,
-	picture: PropTypes.string.isRequired,
-	rating: PropTypes.number.isRequired,
-};
 export default App;
