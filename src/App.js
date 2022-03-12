@@ -2,40 +2,17 @@ import React from "react";
 
 class App extends React.Component {
 	state = {
-		count: 0,
+		isLoading: true,
+    webtoons:[],
 	};
-	add = () => {
-		this.setState((current) => ({
-			count: this.state.count + 1,
-		}));
-	};
-
-	minus = () => {
-		this.setState((current) => ({
-			count: this.state.count - 1,
-		}));
-	};
-
-	componentDidMount() {
-		console.log("component rendered");
-	}
-  componentDidUpdate() {
-    console.log('I just updated');
+  componentDidMount() {
+    setTimeout(() => {
+        this.setState({ isLoading: false });
+    }, 5000);
 }
 	render() {
-		console.log("I'm render");
-		return (
-			<div>
-				<h1> 숫자는 : {this.state.count} </h1>
-				<button onClick={this.add}>Add</button>
-				<button onClick={this.minus}>Minus</button>
-			</div>
-		);
-	}
-
-	constructor(props) {
-		super(props);
-		console.log("hello");
+		const { isLoading } = this.state;
+		return <div> {isLoading ? "Loading..." : "We are ready"} </div>;
 	}
 }
 
