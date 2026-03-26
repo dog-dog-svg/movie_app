@@ -3,17 +3,32 @@ import axios from 'axios';
 import Movie from '../components/Movie';
 import './Home.css';
 
+const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
+const BASE_URL = "https://api.themoviedb.org/3";
+
 class Home extends React.Component {
   state = {
     isLoading: true,
     movies: [],
   };
   getMovies = async () => {
-    const {
-      data: {
-        data: { movies },
-      },
-    } = await axios.get('https://yts-proxy.now.sh/list_movies.json?sort_by=rating');
+    const [genreRes, movieRes] = await Promise.all([
+      axios.get(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}&language=ko-KR`),
+      axios.get(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=ko-KR&page=1`),
+    ]);
+
+    const genreMap = {};
+    genreRes.data.genres.forEach(g => { genreMap[g.id] = g.name; });
+
+    const movies = movieRes.data.results.map(movie => ({
+      id: movie.id,
+      title: movie.title,
+      year: parseInt(movie.release_date?.slice(0, 4) || '0'),
+      summary: movie.overview || '',
+      poster: `https://image.tmdb.org/t/p/w300${movie.poster_path}`,
+      genres: movie.genre_ids.map(id => genreMap[id]).filter(Boolean),
+    }));
+
     this.setState({ movies, isLoading: false });
   };
   componentDidMount() {
@@ -29,19 +44,17 @@ class Home extends React.Component {
           </div>
         ) : (
           <div className="movies">
-            {movies.map((movie) => {
-              return (
-                <Movie
-                  key={movie.id}
-                  id={movie.id}
-                  year={movie.year}
-                  title={movie.title}
-                  summary={movie.summary}
-                  poster={movie.medium_cover_image}
-                  genres={movie.genres}
-                />
-              );
-            })}
+            {movies.map((movie) => (
+              <Movie
+                key={movie.id}
+                id={movie.id}
+                year={movie.year}
+                title={movie.title}
+                summary={movie.summary}
+                poster={movie.poster}
+                genres={movie.genres}
+              />
+            ))}
           </div>
         )}
       </section>
