@@ -53,6 +53,7 @@ class Home extends React.Component {
                 summary={movie.summary}
                 poster={movie.poster}
                 genres={movie.genres}
+                vote_count={movie.vote_count}
               />
             ))}
           </div>
